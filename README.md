@@ -1,0 +1,1 @@
+Android Swipe Layout: https://github.com/daimajia/AndroidSwipeLayout/wiki/usage?utm_source=android-arsenal.com&utm_medium=referral&utm_campaign=855
