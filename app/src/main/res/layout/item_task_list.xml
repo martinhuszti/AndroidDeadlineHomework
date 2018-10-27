@@ -6,56 +6,81 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingBottom="8dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:paddingTop="8dp">
 
-    <TextView
-        android:id="@+id/ShoppingItemIconImageView"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginLeft="8dp"
-        android:padding="8dp"
-        tools:text="Még 12 nap"
-         />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/ShoppingItemIconImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="8pt"
+            android:textAlignment="center"
+            tools:text="12"
+            />
+
+        <TextView
+            android:id="@+id/nap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="8pt"
+            android:textAlignment="center"
+            tools:text="nap"
+            />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:textAlignment="center"
+        >
 
         <TextView
             android:id="@+id/ShoppingItemNameTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="20sp"
+            android:textStyle="bold"
             tools:text="MobWeb Házi" />
-
 
 
         <TextView
             android:id="@+id/ShoppingItemPriceTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             tools:text="2018.12.02" />
     </LinearLayout>
 
     <ImageButton
         android:id="@+id/ShoppingItemRemoveButton"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="60dp"
+        android:layout_width="57dp"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:scaleType="fitXY"
+        android:src="@drawable/info_icon"
+
         />
 
     <ImageButton
         android:id="@+id/taskCompleted"
-        android:layout_width="60dp"
-        android:layout_height="match_parent"
-        tools:srcCompat="@tools:sample/avatars[0]"
-        android:scaleType="fitXY"/>
+        android:layout_width="58dp"
+        android:layout_height="55dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/greenMark" />
 
 
 </LinearLayout>
