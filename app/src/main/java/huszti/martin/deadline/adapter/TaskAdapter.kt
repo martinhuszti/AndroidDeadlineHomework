@@ -1,19 +1,18 @@
-
 package huszti.martin.deadline.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
-import kotlinx.android.synthetic.main.item_task_list.*
 
 
 class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-    private var items: ArrayList <Task> = ArrayList ()
+    private var items: ArrayList<Task> = ArrayList()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -26,21 +25,28 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val item = items[position]
-        holder.remainingDays.text=item.dueDate
+        holder.title.text = item.title
+        holder.remainingDays.text = "12"
+        holder.dueDate.text = item.dueDate
+
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
-    interface taskItemClickListener {
-        fun onItemChanged(item: Task)
+
+    fun addItem(item: Task) {
+        items.add(item)
+        notifyItemInserted(items.size - 1)
     }
 
-    fun addItem (item : Task){
-        items.add(item)
+
+    fun deleteItem(item: Task) {
+        items.remove(item)
         notifyDataSetChanged()
     }
+
 
     fun update(taskItems: List<Task>) {
         items.clear()
@@ -48,8 +54,18 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
         notifyDataSetChanged()
     }
 
+    interface taskItemClickListener {
+        fun onItemChanged(item: Task)
+        fun onItemDeleted(item: Task)
+    }
+
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val remainingDays = itemView.findViewById<TextView>(R.id.RemainingDaysTextView)
+
+        val remainingDays = itemView.findViewById<TextView>(R.id.RemainingDaysTextView)!!
+        val title = itemView.findViewById<TextView>(R.id.TaskTitleTextView)!!
+        val dueDate = itemView.findViewById<TextView>(R.id.DueDateTextView)!!
+        val completedButton = itemView.findViewById<Button>(R.id.TaskCompletedButton)
+
 
     }
 }

@@ -5,15 +5,16 @@ import android.arch.persistence.room.*
 
 @Dao
 interface TaskDao {
-    @get:Query("SELECT * FROM shoppingitem")
-    val all: List<Task>
+
+    @Query("SELECT * FROM taskitem")
+    fun getAll(): List<Task>
 
     @Insert
-    fun insert(shoppingItems: Task): Long
+    fun insert(task: Task): Long
 
     @Update
-    fun update(shoppingItem: Task)
+    fun update(task: Task)
 
     @Delete
-    fun deleteItem(shoppingItem: Task)
+    fun deleteItem(task: Task)
 }

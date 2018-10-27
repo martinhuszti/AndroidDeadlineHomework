@@ -9,7 +9,7 @@ class LoadTasksAsync(
 )
     : AsyncTask<Unit, Unit, List<Task>>() {
     override fun doInBackground(vararg params: Unit?): List<Task> {
-      return database.TaskDao().all
+      return database.TaskDao().getAll()
     }
 
     override fun onPostExecute(result: List<Task>) {

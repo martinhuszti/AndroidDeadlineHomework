@@ -5,20 +5,19 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import android.arch.persistence.room.TypeConverter
 
-@Entity(tableName = "shoppingitem")
+@Entity(tableName = "taskitem")
 class Task(
-        @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) var ID: Int,
-        @ColumnInfo(name = "title") var title: String,
-        @ColumnInfo(name = "priority")var priority: Priority,
-        @ColumnInfo(name = "dueDate") var dueDate: String,
-        @ColumnInfo(name = "description") var description: String
+        @ColumnInfo(name = "title") var title: String = "",
+        @ColumnInfo(name = "description") var description: String = "",
+        @ColumnInfo(name = "dueDate") var dueDate: String = "",
+        @ColumnInfo(name = "priority")var priority: Priority? = Priority.HIGH
 
 ) {
 
+    @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) var taskId: Long = 0
+
     enum class Priority {
         LOW, MEDIUM, HIGH;
-
-
     }
 }
 
