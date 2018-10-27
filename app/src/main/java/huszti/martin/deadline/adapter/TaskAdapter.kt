@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
@@ -28,6 +28,7 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
         holder.title.text = item.title
         holder.remainingDays.text = "12"
         holder.dueDate.text = item.dueDate
+        holder.item=item
 
     }
 
@@ -42,7 +43,7 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
     }
 
 
-    fun deleteItem(item: Task) {
+    fun deleteItem(item: Task?) {
         items.remove(item)
         notifyDataSetChanged()
     }
@@ -56,15 +57,25 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
 
     interface taskItemClickListener {
         fun onItemChanged(item: Task)
-        fun onItemDeleted(item: Task)
+        fun onItemDeleted(item: Task?)
     }
+
+
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val remainingDays = itemView.findViewById<TextView>(R.id.RemainingDaysTextView)!!
         val title = itemView.findViewById<TextView>(R.id.TaskTitleTextView)!!
         val dueDate = itemView.findViewById<TextView>(R.id.DueDateTextView)!!
-        val completedButton = itemView.findViewById<Button>(R.id.TaskCompletedButton)
+        val completedButton = itemView.findViewById<ImageButton>(R.id.TaskCompletedButton)!!
+        var item: Task? = null
+        init {
+            completedButton.setOnClickListener {
+                deleteItem(item)
+                listener.onItemDeleted(item)
+            }
+        }
+
 
 
     }

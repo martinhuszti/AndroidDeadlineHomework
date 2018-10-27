@@ -16,5 +16,5 @@ interface TaskDao {
     fun update(task: Task)
 
     @Delete
-    fun deleteItem(task: Task)
+    fun deleteItem(task: Task?)
 }

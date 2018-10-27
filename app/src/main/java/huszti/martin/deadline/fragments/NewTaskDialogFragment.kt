@@ -39,7 +39,7 @@ class NewTaskDialogFragment : DialogFragment() {
         return AlertDialog.Builder(requireContext())
                 .setTitle(R.string.new_task)
                 .setView(getContentView())
-                .setPositiveButton(R.string.ok) { dialog, which ->
+                .setPositiveButton(R.string.ok) { _, _ ->
                     listener.onTaskCreated(getTask())
                 }
                 .setNegativeButton(R.string.cancel, null)

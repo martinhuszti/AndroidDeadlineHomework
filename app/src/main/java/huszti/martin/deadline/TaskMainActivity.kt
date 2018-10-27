@@ -9,15 +9,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import huszti.martin.deadline.adapter.TaskAdapter
-import huszti.martin.deadline.data.AddTaskAsync
-import huszti.martin.deadline.data.LoadTasksAsync
-import huszti.martin.deadline.data.Task
-import huszti.martin.deadline.data.TaskDatabase
+import huszti.martin.deadline.data.*
 import huszti.martin.deadline.fragments.NewTaskDialogFragment
 import kotlinx.android.synthetic.main.activity_tasks.*
 
 
 class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener, NewTaskDialogFragment.NewTaskDialogListener{
+
 
 
     private lateinit var recyclerView: RecyclerView
@@ -32,7 +30,7 @@ class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
         setSupportActionBar(toolbar)
 
         //floatingActionButton
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             NewTaskDialogFragment().show(supportFragmentManager, NewTaskDialogFragment.TAG)
         }
 
@@ -76,7 +74,8 @@ class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-
-
+    override fun onItemDeleted(item: Task?) {
+        DeleteTaskAsync(item,database).execute()
+    }
 
 }
