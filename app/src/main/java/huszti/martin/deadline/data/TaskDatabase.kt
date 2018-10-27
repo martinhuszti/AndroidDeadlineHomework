@@ -8,7 +8,7 @@ import android.arch.persistence.room.TypeConverters
 
 @Database(entities = [Task::class], version = 1)
 
-@TypeConverters(Task.Priority::class)
+@TypeConverters(TaskEnumConverters::class)
 abstract class TaskDatabase : RoomDatabase() {
     abstract fun TaskDao(): TaskDao
 }

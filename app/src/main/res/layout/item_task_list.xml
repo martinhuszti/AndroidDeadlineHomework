@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,19 +10,13 @@
     android:paddingRight="16dp"
     android:paddingTop="8dp">
 
-    <CheckBox
-        android:id="@+id/ShoppingItemIsBoughtCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-         />
-
-    <ImageView
+    <TextView
         android:id="@+id/ShoppingItemIconImageView"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginLeft="8dp"
         android:padding="8dp"
+        tools:text="Még 12 nap"
          />
 
     <LinearLayout
@@ -35,34 +30,32 @@
             android:id="@+id/ShoppingItemNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Apple" />
+            tools:text="MobWeb Házi" />
 
-        <TextView
-            android:id="@+id/ShoppingItemDescriptionTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="My favorite fruit" />
 
-        <TextView
-            android:id="@+id/ShoppingItemCategoryTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Food" />
 
         <TextView
             android:id="@+id/ShoppingItemPriceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="20 Ft" />
+            tools:text="2018.12.02" />
     </LinearLayout>
 
     <ImageButton
         android:id="@+id/ShoppingItemRemoveButton"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
         android:scaleType="fitXY"
         />
+
+    <ImageButton
+        android:id="@+id/taskCompleted"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        tools:srcCompat="@tools:sample/avatars[0]"
+        android:scaleType="fitXY"/>
+
 
 </LinearLayout>
