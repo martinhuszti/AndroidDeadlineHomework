@@ -2,11 +2,14 @@
 package huszti.martin.deadline.adapter
 
 import android.support.v7.widget.RecyclerView
-
-import android.view.*
-import android.widget.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
+import kotlinx.android.synthetic.main.item_task_list.*
+
 
 class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
@@ -22,9 +25,8 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        val item = items.get(position)
-
-        holder.item = item
+        val item = items[position]
+        holder.remainingDays.text=item.dueDate
     }
 
     override fun getItemCount(): Int {
@@ -47,8 +49,7 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
     }
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-       var item: Task? = null
+        val remainingDays = itemView.findViewById<TextView>(R.id.RemainingDaysTextView)
 
     }
 }

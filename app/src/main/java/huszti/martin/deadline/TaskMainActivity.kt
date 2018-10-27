@@ -2,7 +2,6 @@ package huszti.martin.deadline
 
 import android.arch.persistence.room.Room
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -17,7 +16,7 @@ import huszti.martin.deadline.data.Task
 import huszti.martin.deadline.data.TaskDatabase
 
 
-class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener{
+class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener {
     override fun onItemChanged(item: Task) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -36,7 +35,8 @@ class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener{
 
         //floatingActionButton
         fab.setOnClickListener { view ->
-
+            var task: Task = Task(1, "ad", Task.Priority.HIGH, "1231", "asd")
+            taskadapter.addItem(task)
         }
 
         database = Room.databaseBuilder(applicationContext, TaskDatabase::class.java, "task-list").build()
@@ -47,12 +47,11 @@ class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener{
     private fun initRecycleView() {
         recyclerView = findViewById(R.id.MainRecyclerView)
         taskadapter = TaskAdapter(this)
-        LoadTasksAsync(database,taskadapter).execute()
+        LoadTasksAsync(database, taskadapter).execute()
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter=taskadapter
+        recyclerView.adapter = taskadapter
 
     }
-
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

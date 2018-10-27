@@ -5,8 +5,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 
 
-
-@Database(entities = [Task::class], version = 1)
+@Database(entities = [Task::class], version = 1, exportSchema = false)
 
 @TypeConverters(TaskEnumConverters::class)
 abstract class TaskDatabase : RoomDatabase() {

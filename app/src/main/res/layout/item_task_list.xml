@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="8dp"
+    android:paddingBottom="1dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="8dp">
+    android:paddingTop="1dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/ShoppingItemIconImageView"
+            android:id="@+id/RemainingDaysTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="8pt"
@@ -24,7 +24,7 @@
             />
 
         <TextView
-            android:id="@+id/nap"
+            android:id="@+id/napTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="8pt"
@@ -46,7 +46,7 @@
         >
 
         <TextView
-            android:id="@+id/ShoppingItemNameTextView"
+            android:id="@+id/TaskTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
@@ -57,7 +57,7 @@
 
 
         <TextView
-            android:id="@+id/ShoppingItemPriceTextView"
+            android:id="@+id/DueDateTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
@@ -65,22 +65,23 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/ShoppingItemRemoveButton"
+        android:id="@+id/TaskInfoButton"
         style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="57dp"
+        android:layout_width="78dp"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         android:src="@drawable/info_icon"
 
         />
 
     <ImageButton
-        android:id="@+id/taskCompleted"
-        android:layout_width="58dp"
-        android:layout_height="55dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/greenMark" />
+        android:id="@+id/TaskCompletedButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="76dp"
+        android:layout_height="71dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/green_mark" />
 
 
 </LinearLayout>
