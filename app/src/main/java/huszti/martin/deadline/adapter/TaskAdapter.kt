@@ -1,4 +1,6 @@
 
+package huszti.martin.deadline.adapter
+
 import android.support.v7.widget.RecyclerView
 
 import android.view.*
@@ -23,7 +25,7 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
         val item = items.get(position);
         holder.nameTextView.setText(item.title);
         holder.descriptionTextView.setText(item.description);
-        holder.categoryTextView.setText(item.priority.name);
+        //holder.categoryTextView.setText(item.priority.name);
 
         holder.item = item;
     }
@@ -41,9 +43,9 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
         notifyDataSetChanged()
     }
 
-    fun update(shoppingItems: List<Task>) {
+    fun update(taskItems: List<Task>) {
         items.clear()
-        items.addAll(shoppingItems)
+        items.addAll(taskItems)
         notifyDataSetChanged()
     }
 

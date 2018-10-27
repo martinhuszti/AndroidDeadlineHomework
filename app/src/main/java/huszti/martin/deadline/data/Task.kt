@@ -10,7 +10,7 @@ import android.arch.persistence.room.TypeConverter
 class Task(
         @ColumnInfo(name = "id") @PrimaryKey(autoGenerate = true) val ID: Int,
         @ColumnInfo(name = "title") var title: String,
-        @ColumnInfo(name = "priority") var priority: Priority,
+
         @ColumnInfo(name = "dueDate") var dueDate: String,
         @ColumnInfo(name = "description") var description: String
 
