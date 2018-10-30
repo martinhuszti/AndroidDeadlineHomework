@@ -26,7 +26,7 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val item = items[position]
         holder.title.text = item.title
-        holder.remainingDays.text = "12"
+        holder.remainingDays.text = item.remanindays.toString()
         holder.dueDate.text = item.dueDate
         holder.item=item
 
@@ -39,7 +39,8 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
 
     fun addItem(item: Task) {
         items.add(item)
-        notifyItemInserted(items.size - 1)
+        items.sortBy { t -> t.remanindays  }
+        notifyDataSetChanged()
     }
 
 

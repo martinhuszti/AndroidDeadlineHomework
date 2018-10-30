@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,32 +8,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/new_task_title"/>
+        android:text="@string/new_task_title" />
 
     <EditText
         android:id="@+id/TaskTitleEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dip"
-        android:text="@string/description"/>
-
-    <EditText
-        android:id="@+id/TaskDescriptionEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dip"
-        android:text="@string/priority"/>
-
-    <Spinner
-        android:id="@+id/TaskItemCategorySpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -42,12 +19,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dip"
-        android:text="@string/dueDate"/>
+        android:text="@string/description" />
 
     <EditText
-        android:id="@+id/TaskDueDate"
+        android:id="@+id/TaskDescriptionEditText"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="datetime"/>
+        android:layout_marginTop="16dip"
+        android:text="@string/dueDate" />
+
+    <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
+        android:id="@+id/datePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

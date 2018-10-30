@@ -7,8 +7,12 @@ import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
+import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
+import kotlinx.android.synthetic.main.dialog_new_task.view.*
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class NewTaskDialogFragment : DialogFragment() {
@@ -19,7 +23,7 @@ class NewTaskDialogFragment : DialogFragment() {
 
     var nameEditText: EditText? = null
     var descriptionEditText: EditText? = null
-    var dueDateEditText: EditText? = null
+    var ddp: CollapsibleCalendar? = null
 
 
     interface NewTaskDialogListener {
@@ -47,10 +51,26 @@ class NewTaskDialogFragment : DialogFragment() {
     }
 
     private fun getTask(): Task {
-        val task: Task = Task()
+        val task = Task()
         task.title = nameEditText?.text.toString()
         task.description = descriptionEditText?.text.toString()
-        task.dueDate = dueDateEditText?.text.toString()
+
+
+        var dS = Date() //dateSelected
+        dS.date = ddp!!.selectedDay.day
+        dS.month = ddp!!.selectedDay.month // mert 0-tól 11ig megy
+        dS.year = ddp!!.year
+        dS.hours = 23
+        dS.minutes = 53
+        task.dueDate = dS.toString()
+        var today = Date()
+        today.year += 1900 // Collapsable calendar mas formatum miatt
+
+        task.dueDate = dS.year.toString() + "-" + dS.month.toString() + "-" + dS.date.toString()
+        task.remanindays = TimeUnit.MILLISECONDS.toDays(dS.time - today.time).toInt()
+
+
+
 
         return task
 
@@ -59,10 +79,10 @@ class NewTaskDialogFragment : DialogFragment() {
 
 
     private fun getContentView(): View {
-        val contentView : View = LayoutInflater.from(context).inflate(R.layout.dialog_new_task, null)
-        nameEditText = contentView.findViewById<EditText>(R.id.TaskTitleEditText)
-        dueDateEditText = contentView.findViewById<EditText>(R.id.TaskDueDate)
-        descriptionEditText = contentView.findViewById<EditText>(R.id.TaskDescriptionEditText)
+        val contentView: View = LayoutInflater.from(context).inflate(R.layout.dialog_new_task, null)
+        nameEditText = contentView.TaskTitleEditText
+        descriptionEditText = contentView.TaskDescriptionEditText
+        ddp = contentView.datePicker
 
 
         return contentView
