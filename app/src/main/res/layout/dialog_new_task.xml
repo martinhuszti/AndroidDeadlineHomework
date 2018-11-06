@@ -1,41 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dip">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/new_task_title" />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/TaskTitleEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dip"
-        android:text="@string/description" />
+        android:focusableInTouchMode="true"
+        android:hint="@string/new_task_title"
+        android:textColorHint="@android:color/white"
+        app:met_iconLeft="@drawable/task_icon" />
 
-    <EditText
+
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/TaskDescriptionEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="@string/description"
+        app:met_iconLeft="@drawable/description_icon" />
+
+    <LinearLayout
+        android:id="@+id/saveToCalendarButton"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+
+        <com.github.zagum.switchicon.SwitchIconView
+            android:id="@+id/saveToCalendarSwitchIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            app:si_animation_duration="1000"
+            app:si_disabled_alpha=".5"
+            app:si_disabled_color="#b7b7b7"
+            app:si_enabled="false"
+            app:si_tint_color="#3954de"
+            app:srcCompat="@drawable/calendar_icon" />
+
+        <TextView
+            android:id="@+id/saveToCalendarTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/saveToCalendar"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dip"
-        android:text="@string/dueDate" />
+        android:text="@string/dueDate"
+        android:textSize="18sp" />
 
     <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
         android:id="@+id/datePicker"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:expandIconColor="@color/colorPrimary" />
 
 </LinearLayout>

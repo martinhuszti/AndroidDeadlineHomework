@@ -6,14 +6,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.support.v4.app.DialogFragment
-import android.util.EventLog
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
+import com.github.zagum.switchicon.SwitchIconView
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
+import kotlinx.android.synthetic.main.dialog_new_task.*
 import kotlinx.android.synthetic.main.dialog_new_task.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -26,7 +30,9 @@ class NewTaskDialogFragment : DialogFragment() {
 
     var nameEditText: EditText? = null
     var descriptionEditText: EditText? = null
-    var ddp: CollapsibleCalendar? = null
+    var datePicker: CollapsibleCalendar? = null
+    var saveToCalendarSwitch: SwitchIconView? = null
+    var saveToCalendarButton: LinearLayout? = null
 
 
     interface NewTaskDialogListener {
@@ -51,6 +57,8 @@ class NewTaskDialogFragment : DialogFragment() {
                 }
                 .setNegativeButton(R.string.cancel, null)
                 .create()
+
+
     }
 
     private fun getTask(): Task {
@@ -58,21 +66,15 @@ class NewTaskDialogFragment : DialogFragment() {
         task.title = nameEditText?.text.toString()
         task.description = descriptionEditText?.text.toString()
 
+        var dateSelected = Date(datePicker!!.year - 1900, datePicker!!.selectedDay.month, datePicker!!.selectedDay.day, 23, 59)
 
-        var dS = Date() //dateSelected
-        dS.date = ddp!!.selectedDay.day
-        dS.month = ddp!!.selectedDay.month // mert 0-tól 11ig megy
-        dS.year = ddp!!.year-1900
-        dS.hours = 23
-        dS.minutes = 59
 
         var today = Date()
-        today.year
+        val df = SimpleDateFormat("yyyy-MM-dd")
 
-        task.dueDate = (dS.year+1900).toString() + "-" + dS.month.toString() + "-" + dS.date
-                .toString()
-        task.remanindays = TimeUnit.MILLISECONDS.toDays(dS.time - today.time).toInt()
-        addEvent(task.title, dS.time )
+        task.dueDate = df.format(dateSelected)
+        task.remanindays = TimeUnit.MILLISECONDS.toDays(dateSelected.time - today.time).toInt()
+        if(saveToCalendarSwitch!!.isIconEnabled) addEvent(task.title, dateSelected.time)
         return task
     }
 
@@ -80,11 +82,11 @@ class NewTaskDialogFragment : DialogFragment() {
         val intent = Intent(Intent.ACTION_INSERT).apply {
             data = CalendarContract.Events.CONTENT_URI
             putExtra(CalendarContract.Events.TITLE, title)
-            putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, begin)
+            putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY,true)
 
         }
 
-            startActivity(intent)
+        startActivity(intent)
 
     }
 
@@ -93,7 +95,15 @@ class NewTaskDialogFragment : DialogFragment() {
         val contentView: View = LayoutInflater.from(context).inflate(R.layout.dialog_new_task, null)
         nameEditText = contentView.TaskTitleEditText
         descriptionEditText = contentView.TaskDescriptionEditText
-        ddp = contentView.datePicker
+        datePicker = contentView.datePicker
+        saveToCalendarSwitch = contentView.saveToCalendarSwitchIcon
+        saveToCalendarButton = contentView.saveToCalendarButton
+        saveToCalendarButton!!.setOnClickListener {
+            saveToCalendarSwitch!!
+                    .switchState()
+        }
+
+
 
 
         return contentView
