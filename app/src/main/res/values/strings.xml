@@ -11,4 +11,5 @@
     <string name="saveToCalendar">Save To Calendar</string>
     <string name="channel_name">notificationom</string>
     <string name="channel_description">ezegynotification</string>
+    <string name="details">Task Details</string>
 </resources>

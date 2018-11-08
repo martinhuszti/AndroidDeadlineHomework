@@ -15,16 +15,12 @@ import huszti.martin.deadline.data.*
 import huszti.martin.deadline.fragments.NewTaskDialogFragment
 import kotlinx.android.synthetic.main.activity_tasks.*
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
-import android.support.v4.content.ContextCompat.getSystemService
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
-import android.view.View
+import huszti.martin.deadline.fragments.DetailsTaskDialogFragment
 
 
 class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener, NewTaskDialogFragment.NewTaskDialogListener {
@@ -121,5 +117,11 @@ class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
     override fun onItemDeleted(item: Task?) {
         DeleteTaskAsync(item, database).execute()
     }
+
+    override fun onItemDetailsClicked(item: Task) {
+        DetailsTaskDialogFragment.newInstance(item).show(supportFragmentManager, NewTaskDialogFragment.TAG)
+
+    }
+
 
 }

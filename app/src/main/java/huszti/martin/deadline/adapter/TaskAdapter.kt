@@ -9,13 +9,15 @@ import android.widget.ImageButton
 import android.widget.TextView
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
+import huszti.martin.deadline.fragments.NewTaskDialogFragment
+import kotlinx.android.synthetic.main.item_task_list.view.*
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     private var items: ArrayList<Task> = ArrayList()
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -68,15 +70,17 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
     interface taskItemClickListener {
         fun onItemChanged(item: Task)
         fun onItemDeleted(item: Task?)
+        fun onItemDetailsClicked(item: Task)
     }
 
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val remainingDays = itemView.findViewById<TextView>(R.id.RemainingDaysTextView)!!
-        val title = itemView.findViewById<TextView>(R.id.TaskTitleTextView)!!
-        val dueDate = itemView.findViewById<TextView>(R.id.DueDateTextView)!!
-        val completedButton = itemView.findViewById<ImageButton>(R.id.TaskCompletedButton)!!
+        val remainingDays = itemView.RemainingDaysTextView
+        val title = itemView.TaskTitleTextView
+        val dueDate = itemView.DueDateTextView
+        val completedButton = itemView.TaskCompletedButton
+        val detailsButton = itemView.TaskInfoButton
         var item: Task? = null
 
         init {
@@ -84,6 +88,11 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
                 deleteItem(item)
                 listener.onItemDeleted(item)
             }
+            detailsButton.setOnClickListener{
+                item?.let { item -> listener.onItemDetailsClicked(item) }
+            }
+
+
         }
 
 
