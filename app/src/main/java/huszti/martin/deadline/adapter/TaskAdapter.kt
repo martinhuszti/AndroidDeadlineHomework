@@ -1,5 +1,6 @@
 package huszti.martin.deadline.adapter
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import android.widget.ImageButton
 import android.widget.TextView
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
@@ -26,10 +29,16 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val item = items[position]
         holder.title.text = item.title
-        holder.remainingDays.text = item.remanindays.toString()
         holder.dueDate.text = item.dueDate
-        holder.item=item
+        holder.remainingDays.text = item.calculateRemaningDays(reconvertDatePicker(item.dueDate))
+                .toString()
+        holder.item = item
+    }
 
+    @SuppressLint("SimpleDateFormat")
+    private fun reconvertDatePicker(d: String): Date {
+        val df = SimpleDateFormat("yyyy-MM-dd")
+        return df.parse(d)
     }
 
     override fun getItemCount(): Int {
@@ -39,7 +48,7 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
 
     fun addItem(item: Task) {
         items.add(item)
-        items.sortBy { t -> t.remanindays  }
+        items.sortBy { t -> t.remanindays }
         notifyDataSetChanged()
     }
 
@@ -62,7 +71,6 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
     }
 
 
-
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val remainingDays = itemView.findViewById<TextView>(R.id.RemainingDaysTextView)!!
@@ -70,13 +78,13 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
         val dueDate = itemView.findViewById<TextView>(R.id.DueDateTextView)!!
         val completedButton = itemView.findViewById<ImageButton>(R.id.TaskCompletedButton)!!
         var item: Task? = null
+
         init {
             completedButton.setOnClickListener {
                 deleteItem(item)
                 listener.onItemDeleted(item)
             }
         }
-
 
 
     }

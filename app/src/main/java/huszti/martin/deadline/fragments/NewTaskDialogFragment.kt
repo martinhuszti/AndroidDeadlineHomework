@@ -1,5 +1,6 @@
 package huszti.martin.deadline.fragments
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
@@ -8,14 +9,12 @@ import android.provider.CalendarContract
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.github.zagum.switchicon.SwitchIconView
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
-import kotlinx.android.synthetic.main.dialog_new_task.*
 import kotlinx.android.synthetic.main.dialog_new_task.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -66,28 +65,31 @@ class NewTaskDialogFragment : DialogFragment() {
         task.title = nameEditText?.text.toString()
         task.description = descriptionEditText?.text.toString()
 
-        var dateSelected = Date(datePicker!!.year - 1900, datePicker!!.selectedDay.month, datePicker!!.selectedDay.day, 23, 59)
+        val dateSelected = Date(datePicker!!.year - 1900, datePicker!!.selectedDay.month, datePicker!!.selectedDay.day, 23, 59)
+        task.dueDate = convertDatePicker(dateSelected)
 
+        if (saveToCalendarSwitch!!.isIconEnabled) addEvent(task.title)
 
-        var today = Date()
-        val df = SimpleDateFormat("yyyy-MM-dd")
-
-        task.dueDate = df.format(dateSelected)
-        task.remanindays = TimeUnit.MILLISECONDS.toDays(dateSelected.time - today.time).toInt()
-        if(saveToCalendarSwitch!!.isIconEnabled) addEvent(task.title, dateSelected.time)
         return task
     }
 
-    fun addEvent(title: String, begin: Long) {
+
+
+    @SuppressLint("SimpleDateFormat")
+    private fun convertDatePicker(d: Date): String {
+        val df = SimpleDateFormat("yyyy-MM-dd")
+        return df.format(d)
+    }
+
+
+
+    private fun addEvent(title: String) {
         val intent = Intent(Intent.ACTION_INSERT).apply {
             data = CalendarContract.Events.CONTENT_URI
             putExtra(CalendarContract.Events.TITLE, title)
-            putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY,true)
-
+            putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
         }
-
         startActivity(intent)
-
     }
 
 
@@ -102,10 +104,6 @@ class NewTaskDialogFragment : DialogFragment() {
             saveToCalendarSwitch!!
                     .switchState()
         }
-
-
-
-
         return contentView
     }
 }

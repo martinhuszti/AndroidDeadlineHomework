@@ -9,4 +9,6 @@
     <string name="dueDate">Do until</string>
     <string name="priority">Priority</string>
     <string name="saveToCalendar">Save To Calendar</string>
+    <string name="channel_name">notificationom</string>
+    <string name="channel_description">ezegynotification</string>
 </resources>

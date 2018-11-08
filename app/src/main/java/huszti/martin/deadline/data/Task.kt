@@ -4,6 +4,8 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import android.arch.persistence.room.TypeConverter
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 @Entity(tableName = "taskitem")
 class Task {
@@ -29,6 +31,10 @@ class Task {
     }
 
     var remanindays: Int = 0
+
+    fun calculateRemaningDays(dateSelected : Date): Int {
+        return TimeUnit.MILLISECONDS.toDays(dateSelected.time - Date().time).toInt()
+    }
 }
 
 class TaskEnumConverters {

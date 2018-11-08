@@ -1,6 +1,8 @@
 package huszti.martin.deadline
 
 
+import android.app.Notification
+import android.app.NotificationChannel
 import android.arch.persistence.room.Room
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -12,6 +14,17 @@ import huszti.martin.deadline.adapter.TaskAdapter
 import huszti.martin.deadline.data.*
 import huszti.martin.deadline.fragments.NewTaskDialogFragment
 import kotlinx.android.synthetic.main.activity_tasks.*
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
+import android.content.Intent
+import android.graphics.Color
+import android.os.Build
+import android.support.v4.content.ContextCompat.getSystemService
+import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationManagerCompat
+import android.view.View
 
 
 class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener, NewTaskDialogFragment.NewTaskDialogListener {
@@ -19,8 +32,35 @@ class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var taskadapter: TaskAdapter
-
     private lateinit var database: TaskDatabase
+
+    private val CHANNEL_ID = "10"
+    private val notificationId = 10145
+
+    private fun createNotification(text: String): Notification {
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.app_icon)
+                .setContentTitle("My notification")
+                .setContentText("Much longer text that cannot fit one line...")
+                .setStyle(NotificationCompat.BigTextStyle()
+                        .bigText("Much longer text that cannot fit one line..."))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.channel_name)
+            val descriptionText = getString(R.string.channel_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+
+            val notificationManager: NotificationManager =
+                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +68,6 @@ class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
         setContentView(R.layout.activity_tasks)
         setSupportActionBar(toolbar)
 
-        //floatingActionButton
         fab.setOnClickListener {
             NewTaskDialogFragment().show(supportFragmentManager, NewTaskDialogFragment.TAG)
         }
@@ -36,8 +75,16 @@ class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
         database = Room.databaseBuilder(applicationContext, TaskDatabase::class.java, "task-list").build()
         initRecycleView()
 
+        createNotificationChannel()
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        with(NotificationManagerCompat.from(this)) {
+            notify(notificationId, createNotification("hello"))
+        }
+    }
 
     private fun initRecycleView() {
         recyclerView = findViewById(R.id.MainRecyclerView)
