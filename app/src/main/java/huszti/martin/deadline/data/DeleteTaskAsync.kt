@@ -8,7 +8,6 @@ class DeleteTaskAsync(
 
     override fun doInBackground(vararg params: Void?) {
         database.TaskDao().deleteItem(item)
-
     }
 
 }

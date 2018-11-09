@@ -16,15 +16,14 @@ import huszti.martin.deadline.fragments.NewTaskDialogFragment
 import kotlinx.android.synthetic.main.activity_tasks.*
 import android.app.NotificationManager
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import huszti.martin.deadline.fragments.DetailsTaskDialogFragment
 
 
-class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener, NewTaskDialogFragment.NewTaskDialogListener {
-
+class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
+        NewTaskDialogFragment.NewTaskDialogListener, DetailsTaskDialogFragment.DetailsDialogListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var taskadapter: TaskAdapter
@@ -119,8 +118,14 @@ class TaskMainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
     }
 
     override fun onItemDetailsClicked(item: Task) {
-        DetailsTaskDialogFragment.newInstance(item).show(supportFragmentManager, NewTaskDialogFragment.TAG)
+        DetailsTaskDialogFragment.newInstance(item).show(supportFragmentManager,
+                DetailsTaskDialogFragment.TAG)
+    }
 
+    override fun onModyfyClicked(item: Task) {
+        taskadapter.deleteItem(item)
+        DeleteTaskAsync(item, database).execute()
+        NewTaskDialogFragment.newInstance(item).show(supportFragmentManager, NewTaskDialogFragment.TAG)
     }
 
 

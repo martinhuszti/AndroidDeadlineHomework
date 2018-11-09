@@ -3,15 +3,10 @@ package huszti.martin.deadline.fragments
 
 import android.app.AlertDialog
 import android.app.Dialog
-
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
-
-import android.widget.TextView
-import com.ms.square.android.expandabletextview.ExpandableTextView
-
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
 import kotlinx.android.synthetic.main.dialog_detail_task.view.*
@@ -19,16 +14,27 @@ import kotlinx.android.synthetic.main.dialog_detail_task.view.*
 
 class DetailsTaskDialogFragment : DialogFragment() {
 
+    interface DetailsDialogListener {
+        fun onModyfyClicked(newItem: Task)
+    }
+
+
     companion object {
         val TAG = "DetailsTaskDialogFragment"
         var mytask: Task? = null
-        private const val KEY_TODO_DESCRIPTION = "KEY_TODO_DESCRIPTION"
-
         fun newInstance(task: Task): DialogFragment {
             mytask = task
             return DetailsTaskDialogFragment()
         }
 
+    }
+    private lateinit var listener: DetailsDialogListener
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (activity is DetailsDialogListener) {
+            listener = activity as DetailsDialogListener
+        }
     }
 
 
@@ -37,7 +43,9 @@ class DetailsTaskDialogFragment : DialogFragment() {
                 .setTitle(R.string.details)
                 .setView(getContentView())
                 .setPositiveButton(R.string.ok, null)
-                .setNegativeButton(R.string.modify, null)
+                .setNegativeButton(R.string.modify) { _, _ ->
+                    listener.onModyfyClicked(mytask!!)
+                }
                 .create()
 
 

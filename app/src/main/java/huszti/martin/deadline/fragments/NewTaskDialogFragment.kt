@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import com.github.zagum.switchicon.SwitchIconView
+import com.rengwuxian.materialedittext.MaterialEditText
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
@@ -23,12 +24,20 @@ import java.util.concurrent.TimeUnit
 
 class NewTaskDialogFragment : DialogFragment() {
 
+
+
     companion object {
         val TAG = "NewTaskDialogFragment"
+        var mytask: Task? = null
+        fun newInstance(task: Task): DialogFragment {
+            mytask = task
+            return DetailsTaskDialogFragment()
+        }
+
     }
 
-    var nameEditText: EditText? = null
-    var descriptionEditText: EditText? = null
+    var nameEditText: MaterialEditText? = null
+    var descriptionEditText: MaterialEditText? = null
     var datePicker: CollapsibleCalendar? = null
     var saveToCalendarSwitch: SwitchIconView? = null
     var saveToCalendarButton: LinearLayout? = null
@@ -64,10 +73,8 @@ class NewTaskDialogFragment : DialogFragment() {
         val task = Task()
         task.title = nameEditText?.text.toString()
         task.description = descriptionEditText?.text.toString()
-
         val dateSelected = Date(datePicker!!.year - 1900, datePicker!!.selectedDay.month, datePicker!!.selectedDay.day, 23, 59)
         task.dueDate = convertDatePicker(dateSelected)
-
         if (saveToCalendarSwitch!!.isIconEnabled) addEvent(task.title)
 
         return task
@@ -103,6 +110,12 @@ class NewTaskDialogFragment : DialogFragment() {
         saveToCalendarButton!!.setOnClickListener {
             saveToCalendarSwitch!!
                     .switchState()
+        }
+
+        if (mytask != null){
+            nameEditText?.setText(mytask?.title)
+            descriptionEditText?.setText(mytask?.description)
+           // datePicker?.selectedItem= mytask?.dueDate
         }
         return contentView
     }
