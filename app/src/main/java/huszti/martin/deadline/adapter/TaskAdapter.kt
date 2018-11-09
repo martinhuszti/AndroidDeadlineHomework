@@ -5,14 +5,16 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
+
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
-import huszti.martin.deadline.fragments.NewTaskDialogFragment
+
 import kotlinx.android.synthetic.main.item_task_list.view.*
 import java.text.SimpleDateFormat
 import java.util.*
+import org.joda.time.format.DateTimeFormat
+
+
 
 class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
@@ -30,8 +32,9 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val item = items[position]
         holder.title.text = item.title
-        holder.dueDate.text = item.dueDate
-        holder.remainingDays.text = item.calculateRemaningDays(reconvertDatePicker(item.dueDate))
+        val fmt = DateTimeFormat.forPattern("yyyy. MM. dd.")
+        holder.dueDate.text = fmt.print(item.dueDate)
+        holder.remainingDays.text = item.calculateRemaningDays(item.dueDate!!)
                 .toString()
         holder.item = item
     }

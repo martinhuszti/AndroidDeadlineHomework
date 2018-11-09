@@ -4,10 +4,8 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import android.arch.persistence.room.TypeConverter
-import java.util.*
-import java.util.concurrent.TimeUnit
-import org.joda.time.Days
-
+import org.joda.time.DateTime
+import org.joda.time.Duration
 
 
 @Entity(tableName = "taskitem")
@@ -23,52 +21,36 @@ class Task {
     var description: String = ""
 
     @ColumnInfo(name = "dueDate")
-    var dueDate: String = ""
-
-    @ColumnInfo(name = "priority") //később lehet hasznos lesz
-    var priority: Priority? = Priority.HIGH
+    var dueDate: DateTime = DateTime()
 
 
-    enum class Priority {
-        LOW, MEDIUM, HIGH;
-    }
 
     var remanindays: Int = 0
 
-    fun calculateRemaningDays(dateSelected : Date): Int {
+    fun calculateRemaningDays(dateSelected : DateTime): Int {
 
-
-        var today = Date()
-        today.date--
-        today.hours = 23
-        today.minutes= 59
-        dateSelected.hours=0
-        dateSelected.minutes=0
-        return TimeUnit.MILLISECONDS.toDays(dateSelected.time - Date().time).toInt()
-
+        return Duration(DateTime(), dateSelected).standardDays.toInt()
     }
+
 }
 
 class TaskEnumConverters {
 
     @TypeConverter
-    fun getByOrdinal(ordinal: Int): Task.Priority? {
-        var ret: Task.Priority? = null
+    fun getByOrdinal(str: String): DateTime {
 
-        for (pri in Task.Priority.values()) {
-            if (pri.ordinal == ordinal)
-                ret = pri
-            break
-        }
-        return ret
+        return DateTime(str)
+
     }
 
     @TypeConverter
-    fun toInt(priority: Task.Priority): Int {
-        return priority.ordinal
+    fun toString(dt: DateTime): String {
+        return dt.toString()
     }
 
 }
+
+
 
 
 

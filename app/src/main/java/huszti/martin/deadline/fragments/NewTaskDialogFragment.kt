@@ -9,7 +9,7 @@ import android.provider.CalendarContract
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
+
 import android.widget.LinearLayout
 import com.github.zagum.switchicon.SwitchIconView
 import com.rengwuxian.materialedittext.MaterialEditText
@@ -17,9 +17,7 @@ import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
 import kotlinx.android.synthetic.main.dialog_new_task.view.*
-import java.text.SimpleDateFormat
-import java.util.*
-import java.util.concurrent.TimeUnit
+import org.joda.time.DateTime
 
 
 class NewTaskDialogFragment : DialogFragment() {
@@ -73,23 +71,12 @@ class NewTaskDialogFragment : DialogFragment() {
         val task = Task()
         task.title = nameEditText?.text.toString()
         task.description = descriptionEditText?.text.toString()
-        val dateSelected = Date(datePicker!!.year - 1900, datePicker!!.selectedDay.month, datePicker!!.selectedDay.day, 23, 59)
-        task.dueDate = convertDatePicker(dateSelected)
+
+        val day = datePicker!!.selectedDay
+        task.dueDate = DateTime(day.year, day.month + 1, day.day, 23, 59)
         if (saveToCalendarSwitch!!.isIconEnabled) addEvent(task.title)
 
         return task
-    }
-
-
-    @SuppressLint("SimpleDateFormat")
-    private fun convertDatePicker(d: Date): String {
-        val df = SimpleDateFormat("yyyy-MM-dd")
-        return df.format(d)
-    }
-
-    private fun reconvertDatePicker(d: String): Date {
-        val df = SimpleDateFormat("yyyy-MM-dd")
-        return df.parse(d)
     }
 
 

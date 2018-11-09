@@ -10,6 +10,7 @@ import android.view.View
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
 import kotlinx.android.synthetic.main.dialog_detail_task.view.*
+import org.joda.time.format.DateTimeFormat
 
 
 class DetailsTaskDialogFragment : DialogFragment() {
@@ -56,7 +57,8 @@ class DetailsTaskDialogFragment : DialogFragment() {
         val contentView: View = LayoutInflater.from(context).inflate(R.layout.dialog_detail_task, null)
         contentView.task_title_textview.text = mytask?.title
         contentView.expand_text_view.text = mytask?.description
-        contentView.DueDateTextView.text = mytask?.dueDate.toString()
+        val fmt = DateTimeFormat.forPattern("yyyy. MM. dd.")
+        contentView.DueDateTextView.text =  fmt.print(mytask?.dueDate)
         return contentView
     }
 
