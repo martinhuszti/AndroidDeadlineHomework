@@ -45,6 +45,7 @@ class DetailsTaskDialogFragment : DialogFragment() {
                 .setPositiveButton(R.string.ok, null)
                 .setNegativeButton(R.string.modify) { _, _ ->
                     listener.onModyfyClicked(mytask!!)
+                    dialog.cancel()
                 }
                 .create()
 

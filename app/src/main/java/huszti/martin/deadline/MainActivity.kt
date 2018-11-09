@@ -20,6 +20,7 @@ import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import huszti.martin.deadline.fragments.DetailsTaskDialogFragment
+import kotlinx.android.synthetic.main.content_tasks.*
 
 
 class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
@@ -82,7 +83,7 @@ class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
     }
 
     private fun initRecycleView() {
-        recyclerView = findViewById(R.id.MainRecyclerView)
+        recyclerView = MainRecyclerView
         taskadapter = TaskAdapter(this)
         LoadTasksAsync(database, taskadapter).execute()
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -123,9 +124,9 @@ class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
     }
 
     override fun onModyfyClicked(item: Task) {
+        NewTaskDialogFragment.newInstance(item).show(supportFragmentManager, NewTaskDialogFragment.TAG)
         taskadapter.deleteItem(item)
         DeleteTaskAsync(item, database).execute()
-        NewTaskDialogFragment.newInstance(item).show(supportFragmentManager, NewTaskDialogFragment.TAG)
     }
 
 

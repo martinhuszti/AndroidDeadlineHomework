@@ -25,13 +25,13 @@ import java.util.concurrent.TimeUnit
 class NewTaskDialogFragment : DialogFragment() {
 
 
-
     companion object {
         val TAG = "NewTaskDialogFragment"
         var mytask: Task? = null
+
         fun newInstance(task: Task): DialogFragment {
             mytask = task
-            return DetailsTaskDialogFragment()
+            return NewTaskDialogFragment()
         }
 
     }
@@ -81,13 +81,16 @@ class NewTaskDialogFragment : DialogFragment() {
     }
 
 
-
     @SuppressLint("SimpleDateFormat")
     private fun convertDatePicker(d: Date): String {
         val df = SimpleDateFormat("yyyy-MM-dd")
         return df.format(d)
     }
 
+    private fun reconvertDatePicker(d: String): Date {
+        val df = SimpleDateFormat("yyyy-MM-dd")
+        return df.parse(d)
+    }
 
 
     private fun addEvent(title: String) {
@@ -112,10 +115,9 @@ class NewTaskDialogFragment : DialogFragment() {
                     .switchState()
         }
 
-        if (mytask != null){
+        if (mytask != null) {
             nameEditText?.setText(mytask?.title)
             descriptionEditText?.setText(mytask?.description)
-           // datePicker?.selectedItem= mytask?.dueDate
         }
         return contentView
     }

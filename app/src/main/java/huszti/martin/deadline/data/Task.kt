@@ -6,6 +6,9 @@ import android.arch.persistence.room.PrimaryKey
 import android.arch.persistence.room.TypeConverter
 import java.util.*
 import java.util.concurrent.TimeUnit
+import org.joda.time.Days
+
+
 
 @Entity(tableName = "taskitem")
 class Task {
@@ -33,7 +36,16 @@ class Task {
     var remanindays: Int = 0
 
     fun calculateRemaningDays(dateSelected : Date): Int {
+
+
+        var today = Date()
+        today.date--
+        today.hours = 23
+        today.minutes= 59
+        dateSelected.hours=0
+        dateSelected.minutes=0
         return TimeUnit.MILLISECONDS.toDays(dateSelected.time - Date().time).toInt()
+
     }
 }
 

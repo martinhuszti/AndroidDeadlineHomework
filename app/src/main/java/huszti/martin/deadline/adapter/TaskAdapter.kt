@@ -19,7 +19,6 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
     private var items: ArrayList<Task> = ArrayList()
 
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val itemView = LayoutInflater
                 .from(parent.context)
@@ -50,7 +49,7 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
 
     fun addItem(item: Task) {
         items.add(item)
-        items.sortBy { t -> t.remanindays }
+        items.sortBy { t -> t.dueDate }
         notifyDataSetChanged()
     }
 
@@ -61,9 +60,15 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
     }
 
 
+    fun sortItems (items : ArrayList<Task>){
+
+    }
+
     fun update(taskItems: List<Task>) {
         items.clear()
-        items.addAll(taskItems)
+        for (item in taskItems)
+            items.add(item)
+        items.sortBy { t -> t.dueDate }
         notifyDataSetChanged()
     }
 
@@ -88,7 +93,7 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
                 deleteItem(item)
                 listener.onItemDeleted(item)
             }
-            detailsButton.setOnClickListener{
+            detailsButton.setOnClickListener {
                 item?.let { item -> listener.onItemDetailsClicked(item) }
             }
 

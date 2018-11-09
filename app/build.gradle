@@ -55,5 +55,7 @@ dependencies {
 
     implementation 'com.ms-square:expandableTextView:0.1.4'
 
+    implementation group: 'joda-time', name: 'joda-time', version: '2.9.9'
+
 
 }
