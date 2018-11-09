@@ -24,35 +24,20 @@ class DetailsTaskDialogFragment : DialogFragment() {
         var mytask: Task? = null
         private const val KEY_TODO_DESCRIPTION = "KEY_TODO_DESCRIPTION"
 
-        fun newInstance(task: Task): DetailsTaskDialogFragment {
-            val frag = DetailsTaskDialogFragment()
-            val args = Bundle()
-            args.putString("title", "DETAILS")
-            frag.setArguments(args)
-            mytask=task
-            return frag
+        fun newInstance(task: Task): DialogFragment {
+            mytask = task
+            return DetailsTaskDialogFragment()
         }
 
     }
 
-    private val task: Task? = null
-
-    var task_title: TextView? = null
-    var description_text: ExpandableTextView? = null
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext())
                 .setTitle(R.string.details)
                 .setView(getContentView())
                 .setPositiveButton(R.string.ok, null)
-                .setNegativeButton(R.string.cancel, null)
+                .setNegativeButton(R.string.modify, null)
                 .create()
 
 
@@ -60,11 +45,9 @@ class DetailsTaskDialogFragment : DialogFragment() {
 
     private fun getContentView(): View {
         val contentView: View = LayoutInflater.from(context).inflate(R.layout.dialog_detail_task, null)
-        task_title = contentView.task_title_textview
-        task_title?.text= mytask?.title
-        description_text = contentView.expand_text_view
-        description_text?.setText("A hiedelemmel ellentétben a Lorem Ipsum nem véletlenszerû szöveg. Gyökerei egy Kr. E. 45-ös latin irodalmi klasszikushoz nyúlnak. Richarrd McClintock a virginiai Hampden-Sydney egyetem professzora kikereste az ismeretlenebb latin szavak közül az egyiket (consectetur) egy Lorem Ipsum részletbõl, és a klasszikus irodalmat átkutatva vitathatatlan forrást talált. A Lorem Ipsum az 1.10.32 és 1.10.33-as de Finibus Bonoruem et Malorum részleteibõl származik (A Jó és Rossz határai - Cicero), Kr. E. 45-bõl. A könyv az etika elméletét tanulmányozza, ami nagyon népszerû volt a reneszánsz korban. A Lorem Ipsum elsõ sora, Lorem ipsum dolor sit amet.. a 1.10.32-es bekezdésbõl származik")
-
+        contentView.task_title_textview.text = mytask?.title
+        contentView.expand_text_view.text = mytask?.description
+        contentView.DueDateTextView.text = mytask?.dueDate.toString()
         return contentView
     }
 

@@ -12,4 +12,5 @@
     <string name="channel_name">notificationom</string>
     <string name="channel_description">ezegynotification</string>
     <string name="details">Task Details</string>
+    <string name="modify">MODIFY</string>
 </resources>
