@@ -1,19 +1,14 @@
 package huszti.martin.deadline.adapter
 
-import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
-
 import kotlinx.android.synthetic.main.item_task_list.view.*
-import java.text.SimpleDateFormat
-import java.util.*
 import org.joda.time.format.DateTimeFormat
-
+import java.util.*
 
 
 class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
@@ -34,16 +29,11 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
         holder.title.text = item.title
         val fmt = DateTimeFormat.forPattern("yyyy. MM. dd.")
         holder.dueDate.text = fmt.print(item.dueDate)
-        holder.remainingDays.text = item.calculateRemaningDays(item.dueDate!!)
+        holder.remainingDays.text = item.calculateRemaningDays(item.dueDate)
                 .toString()
         holder.item = item
     }
 
-    @SuppressLint("SimpleDateFormat")
-    private fun reconvertDatePicker(d: String): Date {
-        val df = SimpleDateFormat("yyyy-MM-dd")
-        return df.parse(d)
-    }
 
     override fun getItemCount(): Int {
         return items.size
@@ -63,14 +53,9 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
     }
 
 
-    fun sortItems (items : ArrayList<Task>){
-
-    }
-
     fun update(taskItems: List<Task>) {
         items.clear()
-        for (item in taskItems)
-            items.add(item)
+        items.addAll(taskItems)
         items.sortBy { t -> t.dueDate }
         notifyDataSetChanged()
     }

@@ -29,6 +29,7 @@ class DetailsTaskDialogFragment : DialogFragment() {
         }
 
     }
+
     private lateinit var listener: DetailsDialogListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +59,7 @@ class DetailsTaskDialogFragment : DialogFragment() {
         contentView.task_title_textview.text = mytask?.title
         contentView.expand_text_view.text = mytask?.description
         val fmt = DateTimeFormat.forPattern("yyyy. MM. dd.")
-        contentView.DueDateTextView.text =  fmt.print(mytask?.dueDate)
+        contentView.DueDateTextView.text = fmt.print(mytask?.dueDate)
         return contentView
     }
 

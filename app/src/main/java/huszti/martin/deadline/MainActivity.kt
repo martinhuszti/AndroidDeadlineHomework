@@ -1,9 +1,11 @@
 package huszti.martin.deadline
 
 
-import android.app.Notification
 import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.arch.persistence.room.Room
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -12,19 +14,15 @@ import android.view.Menu
 import android.view.MenuItem
 import huszti.martin.deadline.adapter.TaskAdapter
 import huszti.martin.deadline.data.*
+import huszti.martin.deadline.fragments.DetailsTaskDialogFragment
 import huszti.martin.deadline.fragments.NewTaskDialogFragment
 import kotlinx.android.synthetic.main.activity_tasks.*
-import android.app.NotificationManager
-import android.content.Context
-import android.os.Build
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
-import huszti.martin.deadline.fragments.DetailsTaskDialogFragment
 import kotlinx.android.synthetic.main.content_tasks.*
 
 
 class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
         NewTaskDialogFragment.NewTaskDialogListener, DetailsTaskDialogFragment.DetailsDialogListener {
+
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var taskadapter: TaskAdapter
@@ -33,15 +31,15 @@ class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
     private val CHANNEL_ID = "10"
     private val notificationId = 10145
 
-    private fun createNotification(text: String): Notification {
-        return NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.app_icon)
-                .setContentTitle("My notification")
-                .setContentText("Much longer text that cannot fit one line...")
-                .setStyle(NotificationCompat.BigTextStyle()
-                        .bigText("Much longer text that cannot fit one line..."))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()
-    }
+//    private fun createNotification(text: String): Notification {
+//        return NotificationCompat.Builder(this, CHANNEL_ID)
+//                .setSmallIcon(R.drawable.app_icon)
+//                .setContentTitle("My notification")
+//                .setContentText("Much longer text that cannot fit one line...")
+//                .setStyle(NotificationCompat.BigTextStyle()
+//                        .bigText("Much longer text that cannot fit one line..."))
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()
+//    }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -62,7 +60,9 @@ class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tasks)
+        toolbar.dismissPopupMenus()
         setSupportActionBar(toolbar)
+
 
         fab.setOnClickListener {
             NewTaskDialogFragment().show(supportFragmentManager, NewTaskDialogFragment.TAG)
@@ -77,9 +77,9 @@ class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
 
     override fun onResume() {
         super.onResume()
-        with(NotificationManagerCompat.from(this)) {
-            notify(notificationId, createNotification("hello"))
-        }
+//        with(NotificationManagerCompat.from(this)) {
+//            notify(notificationId, createNotification("hello"))
+//        }
     }
 
     private fun initRecycleView() {
@@ -94,8 +94,7 @@ class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
-        menuInflater.inflate(R.menu.menu_tasks, menu)
-        return true
+        return false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dip">
+    android:padding="24dip"
+    android:fontFamily="sans-serif">
 
 
     <com.rengwuxian.materialedittext.MaterialEditText
@@ -52,7 +53,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/saveToCalendar"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            />
 
     </LinearLayout>
 
@@ -62,7 +64,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dip"
         android:text="@string/dueDate"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        />
 
     <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
         android:id="@+id/datePicker"

@@ -9,7 +9,7 @@ class AddTaskAsync(
         val adapter: TaskAdapter) : AsyncTask<Void, Void, Task>() {
 
     override fun doInBackground(vararg params: Void?): Task {
-       newTask.taskId = database.TaskDao().insert(newTask)
+        newTask.taskId = database.TaskDao().insert(newTask)
         return newTask
     }
 

@@ -24,10 +24,9 @@ class Task {
     var dueDate: DateTime = DateTime()
 
 
-
     var remanindays: Int = 0
 
-    fun calculateRemaningDays(dateSelected : DateTime): Int {
+    fun calculateRemaningDays(dateSelected: DateTime): Int {
 
         return Duration(DateTime(), dateSelected).standardDays.toInt()
     }

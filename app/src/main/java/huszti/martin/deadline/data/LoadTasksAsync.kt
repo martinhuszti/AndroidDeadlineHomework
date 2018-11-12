@@ -6,10 +6,9 @@ import huszti.martin.deadline.adapter.TaskAdapter
 class LoadTasksAsync(
         private val database: TaskDatabase,
         private val adapter: TaskAdapter
-)
-    : AsyncTask<Unit, Unit, List<Task>>() {
+) : AsyncTask<Unit, Unit, List<Task>>() {
     override fun doInBackground(vararg params: Unit?): List<Task> {
-      return database.TaskDao().getAll()
+        return database.TaskDao().getAll()
     }
 
     override fun onPostExecute(result: List<Task>) {
