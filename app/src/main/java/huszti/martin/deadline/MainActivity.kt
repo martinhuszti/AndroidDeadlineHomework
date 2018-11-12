@@ -122,10 +122,10 @@ class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
                 DetailsTaskDialogFragment.TAG)
     }
 
-    override fun onModyfyClicked(item: Task) {
-        NewTaskDialogFragment.newInstance(item).show(supportFragmentManager, NewTaskDialogFragment.TAG)
-        taskadapter.deleteItem(item)
-        DeleteTaskAsync(item, database).execute()
+    override fun onModyfyClicked(newItem: Task) {
+        NewTaskDialogFragment.newInstance(newItem).show(supportFragmentManager, NewTaskDialogFragment.TAG)
+        taskadapter.deleteItem(newItem)
+        DeleteTaskAsync(newItem, database).execute()
     }
 
 
