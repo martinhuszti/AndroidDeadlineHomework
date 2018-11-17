@@ -1,12 +1,14 @@
 package huszti.martin.deadline
 
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.arch.persistence.room.Room
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.app.NotificationCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -31,15 +33,15 @@ class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
     private val CHANNEL_ID = "10"
     private val notificationId = 10145
 
-//    private fun createNotification(text: String): Notification {
-//        return NotificationCompat.Builder(this, CHANNEL_ID)
-//                .setSmallIcon(R.drawable.app_icon)
-//                .setContentTitle("My notification")
-//                .setContentText("Much longer text that cannot fit one line...")
-//                .setStyle(NotificationCompat.BigTextStyle()
-//                        .bigText("Much longer text that cannot fit one line..."))
-//                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()
-//    }
+    private fun createNotification(): Notification {
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.app_icon)
+                .setContentTitle("My notification")
+                .setContentText("Much longer text that cannot fit one line...")
+                .setStyle(NotificationCompat.BigTextStyle()
+                        .bigText("Much longer text that cannot fit one line..."))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()
+    }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -71,14 +73,14 @@ class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
         database = Room.databaseBuilder(applicationContext, TaskDatabase::class.java, "task-list").build()
         initRecycleView()
 
-        createNotificationChannel()
+       // createNotificationChannel()
     }
 
 
     override fun onResume() {
         super.onResume()
 //        with(NotificationManagerCompat.from(this)) {
-//            notify(notificationId, createNotification("hello"))
+//            notify(notificationId, createNotification())
 //        }
     }
 
