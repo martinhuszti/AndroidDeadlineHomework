@@ -8,9 +8,11 @@ import android.provider.CalendarContract
 import android.support.v4.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.github.zagum.switchicon.SwitchIconView
 import com.rengwuxian.materialedittext.MaterialEditText
+import com.shrikanthravi.collapsiblecalendarview.data.Day
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
 import huszti.martin.deadline.R
 import huszti.martin.deadline.data.Task
@@ -72,8 +74,10 @@ class NewTaskDialogFragment : DialogFragment() {
 
         val day = datePicker!!.selectedDay
         task.dueDate = DateTime(day.year, day.month + 1, day.day, 23, 59)
+        
         if (saveToCalendarSwitch!!.isIconEnabled) addEvent(task.title)
 
+        mytask = null
         return task
     }
 
@@ -89,10 +93,14 @@ class NewTaskDialogFragment : DialogFragment() {
 
 
     private fun getContentView(): View {
-        val contentView: View = LayoutInflater.from(context).inflate(R.layout.dialog_new_task, null)
+        val nullparent : ViewGroup? = null
+        val contentView: View = LayoutInflater.from(context).inflate(R.layout.dialog_new_task, nullparent)
         nameEditText = contentView.TaskTitleEditText
         descriptionEditText = contentView.TaskDescriptionEditText
         datePicker = contentView.datePicker
+
+
+
         saveToCalendarSwitch = contentView.saveToCalendarSwitchIcon
         saveToCalendarButton = contentView.saveToCalendarButton
         saveToCalendarButton!!.setOnClickListener {
@@ -103,6 +111,11 @@ class NewTaskDialogFragment : DialogFragment() {
         if (mytask != null) {
             nameEditText?.setText(mytask?.title)
             descriptionEditText?.setText(mytask?.description)
+            datePicker?.selectedItem = Day(mytask?.dueDate!!.year, mytask?.dueDate!!.monthOfYear - 1,
+                    mytask?.dueDate!!.dayOfMonth)
+        } else {
+            val today = DateTime()
+            datePicker?.selectedItem = Day(today.year, today.monthOfYear - 1, today.dayOfMonth)
         }
         return contentView
     }

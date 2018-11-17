@@ -13,5 +13,6 @@ class LoadTasksAsync(
 
     override fun onPostExecute(result: List<Task>) {
         adapter.update(result)
+
     }
 }

@@ -13,4 +13,5 @@
     <string name="channel_description">ezegynotification</string>
     <string name="details">Task Details</string>
     <string name="modify">MODIFY</string>
+    <string name="no_data_available">Add New Tasks</string>
 </resources>

@@ -29,7 +29,7 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
         holder.title.text = item.title
         val fmt = DateTimeFormat.forPattern("yyyy. MM. dd.")
         holder.dueDate.text = fmt.print(item.dueDate)
-        holder.remainingDays.text = item.calculateRemaningDays(item.dueDate)
+        holder.remainingDays.text = item.calculateRemainingDays(item.dueDate)
                 .toString()
         holder.item = item
     }
@@ -44,12 +44,14 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
         items.add(item)
         items.sortBy { t -> t.dueDate }
         notifyDataSetChanged()
+        listener.checkAdapter()
     }
 
 
     fun deleteItem(item: Task?) {
         items.remove(item)
         notifyDataSetChanged()
+        listener.checkAdapter()
     }
 
 
@@ -58,12 +60,18 @@ class TaskAdapter(private val listener: taskItemClickListener) : RecyclerView.Ad
         items.addAll(taskItems)
         items.sortBy { t -> t.dueDate }
         notifyDataSetChanged()
+        listener.checkAdapter()
+    }
+
+    fun isEmpty(): Boolean {
+        return items.isEmpty()
+
     }
 
     interface taskItemClickListener {
-        fun onItemChanged(item: Task)
         fun onItemDeleted(item: Task?)
         fun onItemDetailsClicked(item: Task)
+        fun checkAdapter()
     }
 
 

@@ -26,8 +26,7 @@ class Task {
 
     var remanindays: Int = 0
 
-    fun calculateRemaningDays(dateSelected: DateTime): Int {
-
+    fun calculateRemainingDays(dateSelected: DateTime): Int {
         return Duration(DateTime(), dateSelected).standardDays.toInt()
     }
 
@@ -37,9 +36,7 @@ class TaskEnumConverters {
 
     @TypeConverter
     fun getByOrdinal(str: String): DateTime {
-
         return DateTime(str)
-
     }
 
     @TypeConverter
