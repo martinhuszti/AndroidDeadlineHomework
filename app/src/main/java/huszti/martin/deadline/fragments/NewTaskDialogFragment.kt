@@ -74,7 +74,7 @@ class NewTaskDialogFragment : DialogFragment() {
 
         val day = datePicker!!.selectedDay
         task.dueDate = DateTime(day.year, day.month + 1, day.day, 23, 59)
-        
+
         if (saveToCalendarSwitch!!.isIconEnabled) addEvent(task.title)
 
         mytask = null
@@ -93,7 +93,7 @@ class NewTaskDialogFragment : DialogFragment() {
 
 
     private fun getContentView(): View {
-        val nullparent : ViewGroup? = null
+        val nullparent: ViewGroup? = null
         val contentView: View = LayoutInflater.from(context).inflate(R.layout.dialog_new_task, nullparent)
         nameEditText = contentView.TaskTitleEditText
         descriptionEditText = contentView.TaskDescriptionEditText

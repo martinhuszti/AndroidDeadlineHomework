@@ -43,9 +43,6 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
     kapt "android.arch.persistence.room:compiler:$room_version"
 
-    implementation 'com.marshalchen.ultimaterecyclerview:library:0.7.3'
-
-    implementation 'com.github.badoualy:datepicker-timeline:c6dcd05737'
 
     implementation 'com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.0'
 

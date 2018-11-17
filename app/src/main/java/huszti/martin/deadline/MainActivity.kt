@@ -1,11 +1,7 @@
 package huszti.martin.deadline
 
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.arch.persistence.room.Room
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -13,28 +9,24 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Adapter
 import huszti.martin.deadline.adapter.TaskAdapter
 import huszti.martin.deadline.data.*
 import huszti.martin.deadline.fragments.DetailsTaskDialogFragment
 import huszti.martin.deadline.fragments.NewTaskDialogFragment
 import kotlinx.android.synthetic.main.activity_tasks.*
 import kotlinx.android.synthetic.main.content_tasks.*
-import android.widget.TextView
-import huszti.martin.deadline.R.id.empty_view
 
 
 class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
         NewTaskDialogFragment.NewTaskDialogListener, DetailsTaskDialogFragment.DetailsDialogListener {
 
 
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var taskadapter: TaskAdapter
     private lateinit var database: TaskDatabase
 
-    private val CHANNEL_ID = "10"
- //   private val notificationId = 10145
+//    private val CHANNEL_ID = "10"
+    //   private val notificationId = 10145
 
 //    private fun createNotification(text: String): Notification {
 //        return NotificationCompat.Builder(this, CHANNEL_ID)
@@ -46,20 +38,20 @@ class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
 //                .setPriority(NotificationCompat.PRIORITY_DEFAULT).build()
 //    }
 
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = getString(R.string.channel_name)
-            val descriptionText = getString(R.string.channel_description)
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
-            }
-
-            val notificationManager: NotificationManager =
-                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
+//    private fun createNotificationChannel() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            val name = getString(R.string.channel_name)
+//            val descriptionText = getString(R.string.channel_description)
+//            val importance = NotificationManager.IMPORTANCE_DEFAULT
+//            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+//                description = descriptionText
+//            }
+//
+//            val notificationManager: NotificationManager =
+//                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//            notificationManager.createNotificationChannel(channel)
+//        }
+//    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,19 +74,15 @@ class MainActivity : AppCompatActivity(), TaskAdapter.taskItemClickListener,
         checkAdapterEmpty()
     }
 
-        fun checkAdapterEmpty(){
-            if (taskadapter.isEmpty()) {
-                recyclerView.setVisibility(View.GONE)
-                empty_view.setVisibility(View.VISIBLE)
-            }
-            else {
-                recyclerView.setVisibility(View.VISIBLE)
-                empty_view.setVisibility(View.GONE)
-            }
+    fun checkAdapterEmpty() {
+        if (taskadapter.isEmpty()) {
+            recyclerView.setVisibility(View.GONE)
+            empty_view.setVisibility(View.VISIBLE)
+        } else {
+            recyclerView.setVisibility(View.VISIBLE)
+            empty_view.setVisibility(View.GONE)
         }
-
-
-
+    }
 
 
     override fun onResume() {
