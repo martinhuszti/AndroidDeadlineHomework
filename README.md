@@ -1,1 +1,2 @@
-Android Swipe Layout: https://github.com/daimajia/AndroidSwipeLayout/wiki/usage?utm_source=android-arsenal.com&utm_medium=referral&utm_campaign=855
+
+<img src="https://gitlab.com/martinhuszti/deadline/raw/master/app/src/main/res/drawable-v24/app_icon.png"  width="496" height="228">
